@@ -1,4 +1,5 @@
 import React from "react";
+// import InfoModal from "../modals/info";
 
 
 function Header() {
@@ -8,6 +9,7 @@ function Header() {
 
     return (
         <div class = "title">
+        {/* <InfoModal /> */}
         <h1>Musical Connections</h1>
         <p>{formattedDate}</p>
         <h2>Create four groups of four!</h2>
@@ -15,4 +17,4 @@ function Header() {
     )
 }
 
-export default Header
+export default Header;
