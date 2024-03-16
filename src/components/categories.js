@@ -40,6 +40,7 @@ const categories = Object.keys(cats || {}).map((cat) => {
   // console.log('scotttest cat', cat);
   return {
     word: cat,
+    ans: cats[cat],
     highlighted: false,
   };
 });

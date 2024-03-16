@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { categories } from "./categories.js";
 import Buttons from "./Buttons.js";
 import GridTile from "./GridTile.js"
@@ -50,11 +50,29 @@ function deselectAllCards({ cards, setCards }) {
 };
 
 function submitGuess({ cards, setCards }) {
-  console.log('scotttest cards', cards)
+  console.log('scotttest cards', cards);
+  const highlightedAnswers = cards
+    .filter(card => card.highlighted)
+    .map(card => card.ans);
+
+    const allSameAnswer = highlightedAnswers.length > 0 &&
+    highlightedAnswers.every(answer => answer === highlightedAnswers[0]);
+
+  if (allSameAnswer) {
+    console.log("All highlighted cards have the same answer.");
+  } else {
+    console.log("Highlighted cards have different answers.");
+  }
 };
 
 function GameBoard() {
-    const [cards, setCards] = useState(categories);
+    // const [cards, setCards] = useState(categories);
+    const [cards, setCards] = useState([]);
+
+    // Shuffle cards on initial call
+    useEffect(() => {
+      setCards(shuffle(categories));
+    }, []);
 
 
     // Render the cards
