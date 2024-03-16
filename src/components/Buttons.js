@@ -4,7 +4,6 @@ function Buttons(props) {
     const {
         cards,
         setCards,
-        shuffle,
         shuffleCards,
         deselectAllCards,
         submitGuess
