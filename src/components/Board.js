@@ -20,7 +20,7 @@ function handleClick({index, cards, setCards}) {
       }
       return acc;
     }, 1)
-    if(count <= 4){
+    if(count <= 4 || !!cards[index].highlighted){
       // Create a copy of the cards array
       const updatedCards = [...cards];
       // Toggle the highlighted property of the clicked card
