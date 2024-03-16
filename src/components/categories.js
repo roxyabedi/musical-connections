@@ -18,22 +18,22 @@
 // ];
 
 const cats = {
-  ['Jackson 5']: 'Boy Bands',
-  ['One Direction']: 'Boy Bands',
-  ['NSYNC']: 'Boy Bands',
-  ['Backstreet Boys']: 'Boy Bands',
-  ['Thriller']: 'Album of the Year Winners',
-  ["Harry's House"]: 'Album of the Year Winners',
-  ['Songs in the Key of Life']: 'Album of the Year Winners',
-  ['The Miseducation of Lauryn Hill']: 'Album of the Year Winners',
-  ['Michael Jackson']: 'Band to Solo Artist',
-  ['Harry Styles']: 'Band to Solo Artist',
-  ['Justin Timberlake']: 'Band to Solo Artist',
-  ['Nick Jonas']: 'Band to Solo Artist',
-  ['Nathan Morris']: 'Boyz II Men Members',
-  ['Michael McCary']: 'Boyz II Men Members',
-  ['Shawn Stockman']: 'Boyz II Men Members',
-  ['Wanya Morris']: 'Boyz II Men Members',
+  'Jackson 5': 'Boy Bands',
+  'One Direction': 'Boy Bands',
+  'NSYNC': 'Boy Bands',
+  'Backstreet Boys': 'Boy Bands',
+  'Thriller': 'Album of the Year Winners',
+  "Harry's House": 'Album of the Year Winners',
+  'Songs in the Key of Life': 'Album of the Year Winners',
+  'The Miseducation of Lauryn Hill': 'Album of the Year Winners',
+  'Michael Jackson': 'Band to Solo Artist',
+  'Harry Styles': 'Band to Solo Artist',
+  'Justin Timberlake': 'Band to Solo Artist',
+  'Nick Jonas': 'Band to Solo Artist',
+  'Nathan Morris': 'Boyz II Men Members',
+  'Michael McCary': 'Boyz II Men Members',
+  'Shawn Stockman': 'Boyz II Men Members',
+  'Wanya Morris': 'Boyz II Men Members',
 };
 
 const categories = Object.keys(cats || {}).map((cat) => {

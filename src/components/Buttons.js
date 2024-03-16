@@ -5,7 +5,9 @@ function Buttons(props) {
         cards,
         setCards,
         shuffle,
-        shuffleCards
+        shuffleCards,
+        deselectAllCards,
+        submitGuess
     } = props;
 
     return (
@@ -14,9 +16,9 @@ function Buttons(props) {
           Shuffle
         </button>
         <br></br>
-        <button>Deselect All</button>
+        <button onClick={() => deselectAllCards({cards, setCards})}>Deselect All</button>
         <br></br>
-        <button>Submit</button>
+        <button onClick={() => submitGuess(cards, setCards)}>Submit</button>
         <br></br>
       </div>
     );

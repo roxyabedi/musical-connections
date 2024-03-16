@@ -14,20 +14,44 @@ function shuffle(array) {
 
 // Function to handle click on a card
 function handleClick({index, cards, setCards}) {
-    // Create a copy of the cards array
-    const updatedCards = [...cards];
-    // Toggle the highlighted property of the clicked card
-    updatedCards[index] = {
+    const count = cards.reduce((acc, card) => {
+      if(!!card.highlighted) {
+        return acc + 1
+      }
+      return acc;
+    }, 1)
+    if(count <= 4){
+      // Create a copy of the cards array
+      const updatedCards = [...cards];
+      // Toggle the highlighted property of the clicked card
+      updatedCards[index] = {
         ...updatedCards[index],
         highlighted: !updatedCards[index].highlighted,
-    };
-    // Update the state with the modified cards array
-    setCards(updatedCards);
+      };
+      // Update the state with the modified cards array
+      setCards(updatedCards);
+    }
 }
 
 function shuffleCards({cards, setCards})  {
     const newCardOrder = shuffle([...cards]);
     setCards(newCardOrder);
+};
+
+function deselectAllCards({ cards, setCards }) {
+  const oldCards = [...cards];
+  const updatedCards = oldCards.map(card => {
+    return {
+      ...card,
+      highlighted: false
+    }
+  })
+  setCards(updatedCards);
+};
+
+function submitGuess({ cards, setCards }) {
+  const newCardOrder = shuffle([...cards]);
+  setCards(newCardOrder);
 };
 
 function GameBoard() {
@@ -54,6 +78,8 @@ function GameBoard() {
             setCards={setCards}
             shuffle={shuffle}
             shuffleCards={shuffleCards}
+            submitGuess={submitGuess}
+            deselectAllCards={deselectAllCards}
           />
         </div>
       </div>
