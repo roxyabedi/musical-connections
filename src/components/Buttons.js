@@ -2,11 +2,12 @@ import React from "react";
 
 function Buttons(props) {
     const {
-        cards,
-        setCards,
-        shuffleCards,
-        deselectAllCards,
-        submitGuess
+      cards,
+      setCards,
+      shuffleCards,
+      deselectAllCards,
+      submitGuess,
+      setCorrectCards,
     } = props;
 
     return (
@@ -15,9 +16,15 @@ function Buttons(props) {
           Shuffle
         </button>
         <br></br>
-        <button onClick={() => deselectAllCards({cards, setCards})}>Deselect All</button>
+        <button onClick={() => deselectAllCards({ cards, setCards })}>
+          Deselect All
+        </button>
         <br></br>
-        <button onClick={() => submitGuess({cards, setCards})}>Submit</button>
+        <button
+          onClick={() => submitGuess({ cards, setCards, setCorrectCards })}
+        >
+          Submit
+        </button>
         <br></br>
       </div>
     );

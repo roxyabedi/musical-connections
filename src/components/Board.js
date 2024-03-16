@@ -49,24 +49,43 @@ function deselectAllCards({ cards, setCards }) {
   setCards(updatedCards);
 };
 
-function submitGuess({ cards, setCards }) {
+function guessCorrect({ cards, setCards, setCorrectCards }) {
+  const val = [...cards];
+  const val1 = val.reduce((acc, card) => {
+    if (!!card.highlighted) {
+      return [card].concat(acc);
+    }
+    return acc.concat([card]);
+  }, []);
+  console.log('scotttest val', val1);
+  setCards(val1.slice(4));
+  setCorrectCards(val1.slice(0,4));
+}
+
+function submitGuess({ cards, setCards, setCorrectCards }) {
   console.log('scotttest cards', cards);
   const highlightedAnswers = cards
-    .filter(card => card.highlighted)
-    .map(card => card.ans);
+    .filter((card) => card.highlighted)
+    .map((card) => card.ans);
 
-    const allSameAnswer = highlightedAnswers.length > 0 &&
-    highlightedAnswers.every(answer => answer === highlightedAnswers[0]);
+  console.log('scotttest highlightedAnswers', highlightedAnswers);
+
+  const allSameAnswer =
+    highlightedAnswers.length > 0 &&
+    highlightedAnswers.every((answer) => answer === highlightedAnswers[0]);
 
   if (allSameAnswer) {
-    console.log("All highlighted cards have the same answer.");
+    console.log('All highlighted cards have the same answer.');
+    guessCorrect({ cards, setCards, setCorrectCards });
   } else {
-    console.log("Highlighted cards have different answers.");
+    console.log('Highlighted cards have different answers.');
   }
 };
 
 function GameBoard() {
     // const [cards, setCards] = useState(categories);
+
+    const [correctCards, setCorrectCards] = useState([]);
     const [cards, setCards] = useState([]);
 
     // Shuffle cards on initial call
@@ -79,6 +98,15 @@ function GameBoard() {
     return (
       <div>
         <div className='container'>
+          {correctCards.map((card, index) => (
+            <GridTile
+              card={card}
+              index={index}
+              handleClick={handleClick}
+              cards={cards}
+              setCards={setCards}
+            />
+          ))}
           {cards.map((card, index) => (
             <GridTile
               card={card}
@@ -97,6 +125,7 @@ function GameBoard() {
             shuffleCards={shuffleCards}
             submitGuess={submitGuess}
             deselectAllCards={deselectAllCards}
+            setCorrectCards={setCorrectCards}
           />
         </div>
       </div>
