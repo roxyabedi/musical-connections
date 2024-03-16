@@ -17,7 +17,7 @@ function Buttons(props) {
         <br></br>
         <button onClick={() => deselectAllCards({cards, setCards})}>Deselect All</button>
         <br></br>
-        <button onClick={() => submitGuess(cards, setCards)}>Submit</button>
+        <button onClick={() => submitGuess({cards, setCards})}>Submit</button>
         <br></br>
       </div>
     );

@@ -50,8 +50,7 @@ function deselectAllCards({ cards, setCards }) {
 };
 
 function submitGuess({ cards, setCards }) {
-  const newCardOrder = shuffle([...cards]);
-  setCards(newCardOrder);
+  console.log('scotttest cards', cards)
 };
 
 function GameBoard() {
