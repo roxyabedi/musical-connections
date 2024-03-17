@@ -1,13 +1,8 @@
 import React from 'react';
 
 function GridTile(props) {
-    const {
-        cards,
-        setCards,
-        card,
-        index,
-        handleClick
-    } = props
+    const { cards, setCards, card, index, handleClick, wrongGuessState } =
+      props;
 
   return (
     <div
@@ -15,7 +10,7 @@ function GridTile(props) {
       key={index}
       onClick={() => handleClick({index, cards, setCards})}
       style={{
-        backgroundColor: card.highlighted ? 'rgb(90, 89, 78)' : '',
+        backgroundColor: card.highlighted ? wrongGuessState ? 'red' : 'rgb(90, 89, 78)' : '',
       }}
     >
       <p style={{ color: card.highlighted ? 'white' : '' }}>{card.word}</p>
