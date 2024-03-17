@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from "react";
 import { categories } from "./categories.js";
 import Buttons from "./Buttons.js";
-import GridTile from "./GridTile.js"
+import GridTile from "./GridTile.js";
+import Mistakes from "./mistakes.js";
 
 function shuffle(array) {
   // Fisher-Yates shuffle algorithm
@@ -125,6 +126,9 @@ function GameBoard() {
               wrongGuessState={wrongGuessState}
             />
           ))}
+        </div>
+        <div>
+            <Mistakes />
         </div>
         <div>
           <Buttons
