@@ -35,6 +35,24 @@ const cats = {
   'Shawn Stockman': 'Boyz II Men Members',
   'Wanya Morris': 'Boyz II Men Members',
 };
+// const cats = {
+//     'Jackson 5': { category: 'Boy Bands', color: 'blue' },
+//     'One Direction': { category: 'Boy Bands', color: 'red' },
+//     'NSYNC': { category: 'Boy Bands', color: 'green' },
+//     'Backstreet Boys': { category: 'Boy Bands', color: 'yellow' },
+//     'Thriller': { category: 'Album of the Year Winners', color: 'purple' },
+//     "Harry's House": { category: 'Album of the Year Winners', color: 'orange' },
+//     'Songs in the Key of Life': { category: 'Album of the Year Winners', color: 'pink' },
+//     'The Miseducation of Lauryn Hill': { category: 'Album of the Year Winners', color: 'cyan' },
+//     'Michael Jackson': { category: 'Band to Solo Artist', color: 'magenta' },
+//     'Harry Styles': { category: 'Band to Solo Artist', color: 'lime' },
+//     'Justin Timberlake': { category: 'Band to Solo Artist', color: 'teal' },
+//     'Nick Jonas': { category: 'Band to Solo Artist', color: 'indigo' },
+//     'Nathan Morris': { category: 'Boyz II Men Members', color: 'brown' },
+//     'Michael McCary': { category: 'Boyz II Men Members', color: 'silver' },
+//     'Shawn Stockman': { category: 'Boyz II Men Members', color: 'gold' },
+//     'Wanya Morris': { category: 'Boyz II Men Members', color: 'gray' },
+//   };
 
 const categories = Object.keys(cats || {}).map((cat) => {
   // console.log('scotttest cat', cat);
