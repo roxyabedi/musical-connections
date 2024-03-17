@@ -57,23 +57,36 @@ function guessCorrect({ cards, setCards, setCorrectCards }) {
   
     setCards(remainingCards);
     setCorrectCards(prevCorrectCards => [...prevCorrectCards, ...correctCards]);
+}
+
+function guessWrong({
+  cards,
+  setCards,
+  setWrongGuessState
+}) {
+  setWrongGuessState(true);
+  setTimeout(() => {
+    console.log('Hello, World!');
+    setWrongGuessState(false);
+    deselectAllCards({cards, setCards});
+  }, 1000);
+}
+  
+function submitGuess({ cards, setCards, setCorrectCards, setWrongGuessState }) {
+  const highlightedAnswers = cards
+    .filter((card) => card.highlighted)
+    .map((card) => card.ans);
+  const allSameAnswer =
+    highlightedAnswers.length > 0 &&
+    highlightedAnswers.every((answer) => answer === highlightedAnswers[0]);
+  if (allSameAnswer) {
+    console.log('All highlighted cards have the same answer.');
+    guessCorrect({ cards, setCards, setCorrectCards });
+  } else {
+    console.log('Highlighted cards have different answers.');
+    guessWrong({ cards, setCards, setCorrectCards, setWrongGuessState });
   }
-  
-  function submitGuess({ cards, setCards, setCorrectCards }) {
-    const highlightedAnswers = cards
-      .filter(card => card.highlighted)
-      .map(card => card.ans);
-  
-    const allSameAnswer = highlightedAnswers.length > 0 &&
-      highlightedAnswers.every(answer => answer === highlightedAnswers[0]);
-  
-    if (allSameAnswer) {
-      console.log('All highlighted cards have the same answer.');
-      guessCorrect({ cards, setCards, setCorrectCards });
-    } else {
-      console.log('Highlighted cards have different answers.');
-    }
-  }
+}
   
 
 function GameBoard() {
@@ -81,6 +94,7 @@ function GameBoard() {
 
     const [correctCards, setCorrectCards] = useState([]);
     const [cards, setCards] = useState([]);
+    const [wrongGuessState, setWrongGuessState] = useState(false)
 
     // Shuffle cards on initial call
     useEffect(() => {
@@ -108,6 +122,7 @@ function GameBoard() {
               handleClick={handleClick}
               cards={cards}
               setCards={setCards}
+              wrongGuessState={wrongGuessState}
             />
           ))}
         </div>
@@ -120,6 +135,8 @@ function GameBoard() {
             submitGuess={submitGuess}
             deselectAllCards={deselectAllCards}
             setCorrectCards={setCorrectCards}
+            setWrongGuessState={setWrongGuessState}
+            wrongGuessState={wrongGuessState}
           />
         </div>
       </div>
