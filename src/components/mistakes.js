@@ -1,9 +1,7 @@
 import React from "react";
 
-const mistakesRemaining = "⚫️ ⚫️ ⚫️ ⚫️"
-
-function Mistakes () {
-    return(
+function Mistakes ({mistakesRemaining}) {
+    return (
     <div className="mistakes">
         <p>Mistakes remaining: {mistakesRemaining}</p>
     </div>
