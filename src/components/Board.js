@@ -164,23 +164,26 @@ function GameBoard() {
             wrongGuessState={wrongGuessState}
           />
         ))}
-      </div>
-      <div className="mistake">
-        <Mistakes mistakesRemaining={generateMistakesRemaining()} />
-      </div>
-      <div>
-        <Buttons
-          cards={cards}
-          setCards={setCards}
-          shuffle={shuffle}
-          shuffleCards={shuffleRemainingCards}
-          submitGuess={submitGuess}
-          deselectAllCards={deselectAllCards}
-          setCorrectCards={setCorrectCards}
-          setWrongGuessState={setWrongGuessState}
-          wrongGuessState={wrongGuessState}
-          decreaseMistakes={decreaseMistakes}
-        />
+        <div className="mistake-buttons-container">
+  <div className="mistake">
+    <Mistakes mistakesRemaining={generateMistakesRemaining()} />
+  </div>
+  <div>
+    <Buttons
+      cards={cards}
+      setCards={setCards}
+      shuffle={shuffle}
+      shuffleCards={shuffleRemainingCards}
+      submitGuess={submitGuess}
+      deselectAllCards={deselectAllCards}
+      setCorrectCards={setCorrectCards}
+      setWrongGuessState={setWrongGuessState}
+      wrongGuessState={wrongGuessState}
+      decreaseMistakes={decreaseMistakes}
+    />
+  </div>
+</div>
+
       </div>
     </div>
   );

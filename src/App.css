@@ -33,15 +33,13 @@
 }
 
 .container {
-  /* grid-template-rows: repeat(4, 1fr); */
   width: 1000px;
   word-wrap: break-word;
   display: grid;
   gap: 8px;
-  height: calc(3 * 8px + 4 * 80px);
-  bottom: 0;
   grid-template-columns: repeat(4, 1fr);
-  /* position: absolute; */
+  grid-template-rows: repeat(4, auto) 1fr; 
+  position: relative;
   text-align: center;
   color: rgb(0, 0, 0);
   font-size: 20px;
@@ -133,15 +131,13 @@ button {
   align-items: center;
 }
 
-.mistake {
-  font-size: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .mistake-container {
   align-items: center;
   justify-content: center;
   text-align: center;
+}
+
+.mistake-buttons-container {
+  grid-column: 1 / -1; 
+  text-align: center; 
 }
