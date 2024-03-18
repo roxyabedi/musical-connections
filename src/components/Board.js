@@ -13,86 +13,6 @@ function shuffle(array) {
   return array;
 }
 
-// Function to handle click on a card
-function handleClick({ index, cards, setCards }) {
-  const count = cards.reduce((acc, card) => {
-    if (!!card.highlighted) {
-      return acc + 1;
-    }
-    return acc;
-  }, 1);
-  if (count <= 4 || !!cards[index].highlighted) {
-    const updatedCards = [...cards];
-    updatedCards[index] = {
-      ...updatedCards[index],
-      highlighted: !updatedCards[index].highlighted,
-    };
-    setCards(updatedCards);
-  }
-}
-
-function shuffleCards({ cards, setCards }) {
-  const newCardOrder = shuffle([...cards]);
-  setCards(newCardOrder);
-}
-
-function deselectAllCards({ cards, setCards }) {
-  const oldCards = [...cards];
-  const updatedCards = oldCards.map((card) => {
-    return {
-      ...card,
-      highlighted: false,
-    };
-  });
-  setCards(updatedCards);
-}
-
-function guessCorrect({ cards, setCards, setCorrectCards }) {
-  const highlightedCards = cards.filter((card) => card.highlighted);
-  const remainingCards = cards.filter((card) => !card.highlighted);
-
-  const correctCards = highlightedCards.slice(0, 4);
-
-  setCards(remainingCards);
-  setCorrectCards((prevCorrectCards) => [...prevCorrectCards, ...correctCards]);
-}
-
-function guessWrong({
-  cards,
-  setCards,
-  setWrongGuessState,
-  decreaseMistakes, // Ensure decreaseMistakes is included in the parameters
-}) {
-  setWrongGuessState(true);
-  decreaseMistakes(); // Call decreaseMistakes when a wrong guess is made
-  setTimeout(() => {
-    setWrongGuessState(false);
-    deselectAllCards({ cards, setCards });
-  }, 1000);
-}
-
-function submitGuess({
-  cards,
-  setCards,
-  setCorrectCards,
-  setWrongGuessState,
-  decreaseMistakes, // Added decreaseMistakes parameter
-}) {
-  const highlightedAnswers = cards
-    .filter((card) => card.highlighted)
-    .map((card) => card.ans);
-  const allSameAnswer =
-    highlightedAnswers.length > 0 &&
-    highlightedAnswers.every((answer) => answer === highlightedAnswers[0]);
-  if (allSameAnswer) {
-    console.log("All highlighted cards have the same answer.");
-    guessCorrect({ cards, setCards, setCorrectCards });
-  } else {
-    console.log("Highlighted cards have different answers.");
-    guessWrong({ cards, setCards, setWrongGuessState, decreaseMistakes });
-  }
-}
-
 function GameBoard() {
   const [correctCards, setCorrectCards] = useState([]);
   const [cards, setCards] = useState([]);
@@ -105,6 +25,78 @@ function GameBoard() {
 
   function decreaseMistakes() {
     setMistakesMade((prevMistakes) => prevMistakes + 1);
+  }
+
+  // Function to handle click on a card
+  function handleClick({ index, cards, setCards }) {
+    const count = cards.reduce((acc, card) => {
+      if (!!card.highlighted) {
+        return acc + 1;
+      }
+      return acc;
+    }, 1);
+    if (count <= 4 || !!cards[index].highlighted) {
+      const updatedCards = [...cards];
+      updatedCards[index] = {
+        ...updatedCards[index],
+        highlighted: !updatedCards[index].highlighted,
+      };
+      setCards(updatedCards);
+    }
+  }
+
+  // Function to shuffle cards
+  function shuffleCards() {
+    const newCardOrder = shuffle([...cards]);
+    setCards(newCardOrder);
+  }
+
+  // Function to deselect all cards
+  function deselectAllCards() {
+    const oldCards = [...cards];
+    const updatedCards = oldCards.map((card) => ({
+      ...card,
+      highlighted: false,
+    }));
+    setCards(updatedCards);
+  }
+
+  // Function to handle correct guess
+  function guessCorrect() {
+    const highlightedCards = cards.filter((card) => card.highlighted);
+    const remainingCards = cards.filter((card) => !card.highlighted);
+
+    const correctCards = highlightedCards.slice(0, 4);
+
+    setCards(remainingCards);
+    setCorrectCards((prevCorrectCards) => [...prevCorrectCards, ...correctCards]);
+  }
+
+  // Function to handle wrong guess
+  function guessWrong() {
+    setWrongGuessState(true);
+    decreaseMistakes();
+    setTimeout(() => {
+      setWrongGuessState(false);
+      deselectAllCards();
+    }, 1000);
+  }
+
+  // Function to submit guess
+  function submitGuess() {
+    const highlightedAnswers = cards
+      .filter((card) => card.highlighted)
+      .map((card) => card.ans);
+    const allSameAnswer =
+      highlightedAnswers.length > 0 &&
+      highlightedAnswers.every((answer) => answer === highlightedAnswers[0]);
+    if (allSameAnswer) {
+      console.log("All highlighted cards have the same answer.");
+      guessCorrect();
+    } else {
+      console.log("Highlighted cards have different answers.");
+      guessWrong();
+    }
   }
 
   // Function to generate mistakesRemaining string based on mistakesMade count
@@ -124,6 +116,7 @@ function GameBoard() {
             handleClick={handleClick}
             cards={cards}
             setCards={setCards}
+            correctCards={correctCards}
           />
         ))}
         {cards.map((card, index) => (
@@ -135,6 +128,7 @@ function GameBoard() {
             cards={cards}
             setCards={setCards}
             wrongGuessState={wrongGuessState}
+            correctCards={correctCards}
           />
         ))}
       </div>
@@ -145,17 +139,16 @@ function GameBoard() {
         <Buttons
           cards={cards}
           setCards={setCards}
-          shuffle={shuffle}
           shuffleCards={shuffleCards}
           submitGuess={submitGuess}
           deselectAllCards={deselectAllCards}
           setCorrectCards={setCorrectCards}
           setWrongGuessState={setWrongGuessState}
           wrongGuessState={wrongGuessState}
-          decreaseMistakes={decreaseMistakes} // Pass decreaseMistakes as a prop
+          decreaseMistakes={decreaseMistakes}
         />
       </div>
-    </div>
+      </div>
   );
 }
 
