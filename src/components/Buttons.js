@@ -8,7 +8,8 @@ function Buttons(props) {
       deselectAllCards,
       submitGuess,
       setCorrectCards,
-      setWrongGuessState
+      setWrongGuessState,
+      decreaseMistakes
     } = props;
 
     return (
@@ -23,7 +24,7 @@ function Buttons(props) {
         <br></br>
         <button
           onClick={() =>
-            submitGuess({ cards, setCards, setCorrectCards, setWrongGuessState })
+            submitGuess({ cards, setCards, setCorrectCards, setWrongGuessState, decreaseMistakes })
           }
         >
           Submit
