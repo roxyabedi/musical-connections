@@ -114,10 +114,10 @@ button {
   }
 
 .button {
-  display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
+  display: inline-flex;
 }
 
 button { 
@@ -128,4 +128,20 @@ button {
 
 .mistakes {
   font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mistake {
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mistake-container {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }

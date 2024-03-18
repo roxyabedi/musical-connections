@@ -18,6 +18,7 @@ function GameBoard() {
   const [cards, setCards] = useState([]);
   const [wrongGuessState, setWrongGuessState] = useState(false);
   const [mistakesMade, setMistakesMade] = useState(0);
+  const [correctCategorySubmitted, setCorrectCategorySubmitted] = useState(false);
 
   useEffect(() => {
     setCards(shuffle(categories));
@@ -27,7 +28,11 @@ function GameBoard() {
     setMistakesMade((prevMistakes) => prevMistakes + 1);
   }
 
-  // Function to handle click on a card
+  function generateMistakesRemaining() {
+    const remainingMistakes = 4 - mistakesMade;
+    return "⚫️ ".repeat(remainingMistakes).trim();
+  }
+
   function handleClick({ index, cards, setCards }) {
     const count = cards.reduce((acc, card) => {
       if (!!card.highlighted) {
@@ -45,45 +50,13 @@ function GameBoard() {
     }
   }
 
-  // Function to shuffle cards
-  function shuffleCards() {
-    const newCardOrder = shuffle([...cards]);
-    setCards(newCardOrder);
-  }
-
-  // Function to deselect all cards
-  function deselectAllCards() {
-    const oldCards = [...cards];
-    const updatedCards = oldCards.map((card) => ({
-      ...card,
-      highlighted: false,
-    }));
-    setCards(updatedCards);
-  }
-
-  // Function to handle correct guess
-  function guessCorrect() {
-    const highlightedCards = cards.filter((card) => card.highlighted);
-    const remainingCards = cards.filter((card) => !card.highlighted);
-
-    const correctCards = highlightedCards.slice(0, 4);
-
-    setCards(remainingCards);
-    setCorrectCards((prevCorrectCards) => [...prevCorrectCards, ...correctCards]);
-  }
-
-  // Function to handle wrong guess
-  function guessWrong() {
-    setWrongGuessState(true);
-    decreaseMistakes();
-    setTimeout(() => {
-      setWrongGuessState(false);
-      deselectAllCards();
-    }, 1000);
-  }
-
-  // Function to submit guess
-  function submitGuess() {
+  function submitGuess({
+    cards,
+    setCards,
+    setCorrectCards,
+    setWrongGuessState,
+    decreaseMistakes,
+  }) {
     const highlightedAnswers = cards
       .filter((card) => card.highlighted)
       .map((card) => card.ans);
@@ -92,32 +65,93 @@ function GameBoard() {
       highlightedAnswers.every((answer) => answer === highlightedAnswers[0]);
     if (allSameAnswer) {
       console.log("All highlighted cards have the same answer.");
-      guessCorrect();
+      setCorrectCategorySubmitted(true);
+      guessCorrect({ cards, setCards, setCorrectCards });
     } else {
       console.log("Highlighted cards have different answers.");
-      guessWrong();
+      guessWrong({ cards, setCards, setWrongGuessState, decreaseMistakes });
     }
   }
 
-  // Function to generate mistakesRemaining string based on mistakesMade count
-  function generateMistakesRemaining() {
-    const remainingMistakes = 4 - mistakesMade;
-    return "⚫️ ".repeat(remainingMistakes).trim(); // Trim any extra space at the end
+  function guessCorrect({ cards, setCards, setCorrectCards }) {
+    const highlightedCards = cards.filter((card) => card.highlighted);
+    const remainingCards = cards.filter((card) => !card.highlighted);
+  
+    const correctCategory = highlightedCards[0].ans;
+    const correctCardsInCategory = highlightedCards.slice(0, 4);
+
+    setCards(remainingCards);
+    setCorrectCards((prevCorrectCards) => {
+      const updatedCorrectCards = [...prevCorrectCards];
+      const existingCategoryIndex = updatedCorrectCards.findIndex(category => category.category === correctCategory);
+      if (existingCategoryIndex !== -1) {
+        updatedCorrectCards[existingCategoryIndex].cards.push(...correctCardsInCategory);
+      } else {
+        updatedCorrectCards.push({
+          category: correctCategory,
+          cards: correctCardsInCategory
+        });
+      }
+      return updatedCorrectCards;
+    });
+  }
+
+  function guessWrong({
+    cards,
+    setCards,
+    setWrongGuessState,
+    decreaseMistakes,
+  }) {
+    setWrongGuessState(true);
+    decreaseMistakes();
+    setTimeout(() => {
+      setWrongGuessState(false);
+      deselectAllCards({ cards, setCards });
+    }, 1000);
+  }
+
+  function deselectAllCards({ cards, setCards }) {
+    const oldCards = [...cards];
+    const updatedCards = oldCards.map((card) => {
+      return {
+        ...card,
+        highlighted: false,
+      };
+    });
+    setCards(updatedCards);
+  }
+
+  function shuffleRemainingCards() {
+    const remainingCards = cards.filter(
+      (card) => !correctCards.some((c) => c.word === card.word)
+    );
+    const shuffledRemainingCards = shuffle(remainingCards);
+    const newCards = cards.map((card) =>
+      correctCards.some((c) => c.word === card.word) ? card : shuffledRemainingCards.pop()
+    );
+    setCards(newCards);
   }
 
   return (
     <div>
       <div className="container">
-        {correctCards.map((card, index) => (
-          <GridTile
+        {correctCategorySubmitted && correctCards.map((categoryObj, index) => (
+          <div
             key={index}
-            card={card}
-            index={index}
-            handleClick={handleClick}
-            cards={cards}
-            setCards={setCards}
-            correctCards={correctCards}
-          />
+            className="category-container"
+            style={{
+              backgroundColor: categories.find(cat => cat.ans === categoryObj.category).color,
+              gridColumn: `1 / span 4`,
+              borderRadius: "6px",
+              padding: "8px",
+              marginBottom: "8px",
+            }}
+          >
+            <h2>{categoryObj.category}</h2>
+            <div className="category-cards">
+              <p>{categoryObj.cards.map(card => card.word).join(", ")}</p>
+            </div>
+          </div>
         ))}
         {cards.map((card, index) => (
           <GridTile
@@ -128,18 +162,18 @@ function GameBoard() {
             cards={cards}
             setCards={setCards}
             wrongGuessState={wrongGuessState}
-            correctCards={correctCards}
           />
         ))}
       </div>
-      <div>
+      <div className="mistake">
         <Mistakes mistakesRemaining={generateMistakesRemaining()} />
       </div>
       <div>
         <Buttons
           cards={cards}
           setCards={setCards}
-          shuffleCards={shuffleCards}
+          shuffle={shuffle}
+          shuffleCards={shuffleRemainingCards}
           submitGuess={submitGuess}
           deselectAllCards={deselectAllCards}
           setCorrectCards={setCorrectCards}
@@ -148,7 +182,7 @@ function GameBoard() {
           decreaseMistakes={decreaseMistakes}
         />
       </div>
-      </div>
+    </div>
   );
 }
 
