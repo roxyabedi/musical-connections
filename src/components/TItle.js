@@ -8,7 +8,7 @@ function Header() {
     const formattedDate = date.toLocaleDateString(undefined, options);
 
     return (
-        <div class = "title">
+        <div className = "title">
         {/* <InfoModal /> */}
         <h1>Musical Connections</h1>
         <p>{formattedDate}</p>
