@@ -33,20 +33,23 @@ function GameBoard() {
     return "⚫️ ".repeat(remainingMistakes).trim();
   }
 
-  function handleClick({ index, cards, setCards }) {
-    const count = cards.reduce((acc, card) => {
-      if (!!card.highlighted) {
-        return acc + 1;
+function handleClick({ index, cards, setCards }) {
+    // Check if there are remaining mistakes
+    if (mistakesMade < 4) {
+      const count = cards.reduce((acc, card) => {
+        if (!!card.highlighted) {
+          return acc + 1;
+        }
+        return acc;
+      }, 1);
+      if (count <= 4 || !!cards[index].highlighted) {
+        const updatedCards = [...cards];
+        updatedCards[index] = {
+          ...updatedCards[index],
+          highlighted: !updatedCards[index].highlighted,
+        };
+        setCards(updatedCards);
       }
-      return acc;
-    }, 1);
-    if (count <= 4 || !!cards[index].highlighted) {
-      const updatedCards = [...cards];
-      updatedCards[index] = {
-        ...updatedCards[index],
-        highlighted: !updatedCards[index].highlighted,
-      };
-      setCards(updatedCards);
     }
   }
 
