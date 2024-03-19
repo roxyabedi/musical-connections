@@ -23,8 +23,20 @@ function Buttons(props) {
         </button>
         <br></br>
         <button
+          className={
+            cards.filter((card) => card.highlighted).length !== 4
+              ? 'disabled-submit'
+              : ''
+          }
+          disabled={cards.filter((card) => card.highlighted).length !== 4}
           onClick={() =>
-            submitGuess({ cards, setCards, setCorrectCards, setWrongGuessState, decreaseMistakes })
+            submitGuess({
+              cards,
+              setCards,
+              setCorrectCards,
+              setWrongGuessState,
+              decreaseMistakes,
+            })
           }
         >
           Submit

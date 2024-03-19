@@ -141,3 +141,8 @@ button {
   grid-column: 1 / -1; 
   text-align: center; 
 }
+
+.disabled-submit {
+  color: darkgrey;
+  border: 1px solid darkgray;
+}
