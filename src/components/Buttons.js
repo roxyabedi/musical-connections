@@ -18,7 +18,15 @@ function Buttons(props) {
           Shuffle
         </button>
         <br></br>
-        <button onClick={() => deselectAllCards({ cards, setCards })}>
+        <button
+          className={
+            !cards.filter((card) => card.highlighted).length
+              ? 'disabled-submit'
+              : ''
+          }
+          disabled={!cards.filter((card) => card.highlighted).length}
+          onClick={() => deselectAllCards({ cards, setCards })}
+        >
           Deselect All
         </button>
         <br></br>
