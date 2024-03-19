@@ -19,6 +19,7 @@ function GameBoard() {
   const [wrongGuessState, setWrongGuessState] = useState(false);
   const [mistakesMade, setMistakesMade] = useState(0);
   const [correctCategorySubmitted, setCorrectCategorySubmitted] = useState(false);
+  const [indexOfJump, setIndexOfJump] = useState(100)
 
   useEffect(() => {
     setCards(shuffle(categories));
@@ -26,6 +27,27 @@ function GameBoard() {
 
   function decreaseMistakes() {
     setMistakesMade((prevMistakes) => prevMistakes + 1);
+  }
+
+  async function bounceCards(cards) {
+    for (let i = 0; i < cards.length; i++) {
+      const card = cards[i];
+      if (card.highlighted === true) {
+        await new Promise((resolve) => {
+          setTimeout(() => {
+            console.log('scotttest hits here');
+            setIndexOfJump(i);
+            resolve();
+          }, 500);
+        });
+      }
+    }
+    await new Promise((resolve) => {
+      setTimeout(() => {
+        resolve();
+      }, 500);
+    });
+    setIndexOfJump(100)
   }
 
   function generateMistakesRemaining() {
@@ -53,7 +75,7 @@ function handleClick({ index, cards, setCards }) {
     }
   }
 
-  function submitGuess({
+  async function submitGuess({
     cards,
     setCards,
     setCorrectCards,
@@ -66,6 +88,9 @@ function handleClick({ index, cards, setCards }) {
     const allSameAnswer =
       highlightedAnswers.length > 0 &&
       highlightedAnswers.every((answer) => answer === highlightedAnswers[0]);
+      console.log('scotttest start');
+    await bounceCards(cards);
+    console.log('scotttest end');
     if (allSameAnswer) {
       console.log("All highlighted cards have the same answer.");
       setCorrectCategorySubmitted(true);
@@ -137,25 +162,28 @@ function handleClick({ index, cards, setCards }) {
 
   return (
     <div>
-      <div className="container">
-        {correctCategorySubmitted && correctCards.map((categoryObj, index) => (
-          <div
-            key={index}
-            className="category-container"
-            style={{
-              backgroundColor: categories.find(cat => cat.ans === categoryObj.category).color,
-              gridColumn: `1 / span 4`,
-              borderRadius: "6px",
-              padding: "8px",
-              marginBottom: "8px",
-            }}
-          >
-            <h2>{categoryObj.category}</h2>
-            <div className="category-cards">
-              <p>{categoryObj.cards.map(card => card.word).join(", ")}</p>
+      <div className='container'>
+        {correctCategorySubmitted &&
+          correctCards.map((categoryObj, index) => (
+            <div
+              key={index}
+              className='category-container'
+              style={{
+                backgroundColor: categories.find(
+                  (cat) => cat.ans === categoryObj.category
+                ).color,
+                gridColumn: `1 / span 4`,
+                borderRadius: '6px',
+                padding: '8px',
+                marginBottom: '8px',
+              }}
+            >
+              <h2>{categoryObj.category}</h2>
+              <div className='category-cards'>
+                <p>{categoryObj.cards.map((card) => card.word).join(', ')}</p>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
         {cards.map((card, index) => (
           <GridTile
             key={index}
@@ -165,28 +193,28 @@ function handleClick({ index, cards, setCards }) {
             cards={cards}
             setCards={setCards}
             wrongGuessState={wrongGuessState}
+            indexOfJump={indexOfJump}
           />
         ))}
-        <div className="mistake-buttons-container">
-  <div className="mistake">
-    <Mistakes mistakesRemaining={generateMistakesRemaining()} />
-  </div>
-  <div>
-    <Buttons
-      cards={cards}
-      setCards={setCards}
-      shuffle={shuffle}
-      shuffleCards={shuffleRemainingCards}
-      submitGuess={submitGuess}
-      deselectAllCards={deselectAllCards}
-      setCorrectCards={setCorrectCards}
-      setWrongGuessState={setWrongGuessState}
-      wrongGuessState={wrongGuessState}
-      decreaseMistakes={decreaseMistakes}
-    />
-  </div>
-</div>
-
+        <div className='mistake-buttons-container'>
+          <div className='mistake'>
+            <Mistakes mistakesRemaining={generateMistakesRemaining()} />
+          </div>
+          <div>
+            <Buttons
+              cards={cards}
+              setCards={setCards}
+              shuffle={shuffle}
+              shuffleCards={shuffleRemainingCards}
+              submitGuess={submitGuess}
+              deselectAllCards={deselectAllCards}
+              setCorrectCards={setCorrectCards}
+              setWrongGuessState={setWrongGuessState}
+              wrongGuessState={wrongGuessState}
+              decreaseMistakes={decreaseMistakes}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );
