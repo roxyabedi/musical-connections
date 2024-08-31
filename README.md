@@ -4,6 +4,8 @@
 
 This project is a web application inspired by the New York Times Connections Game but with a musical twist. The game challenges players to find 4 groups of 4 items that share a common theme or relationship, all related to the world of music, including music icons, genres, and music history. The goal is to correctly identify the connections between the items and group them accordingly. Whether you're a casual music listener or a dedicated fan, this game offers an enjoyable way to test your knowledge of music history, artists, albums, and more.
 
+<img width="1353" alt="Screenshot 2024-08-31 at 4 14 49 PM" src="https://github.com/user-attachments/assets/ce8d8e34-9c08-480b-9728-46e1c142279d">
+
 ## Technologies Used
 
 - React.js: For building the dynamic and interactive user interface.
