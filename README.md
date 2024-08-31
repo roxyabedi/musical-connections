@@ -1,4 +1,16 @@
-# Getting Started with Create React App
+# [Musical Connections](https://musical-connections.netlify.app)
+
+## Overview
+
+This project is a web application inspired by the New York Times Connections Game but with a musical twist. The game challenges players to find 4 groups of 4 items that share a common theme or relationship, all related to the world of music, including music icons, genres, and music history. The goal is to correctly identify the connections between the items and group them accordingly. Whether you're a casual music listener or a dedicated fan, this game offers an enjoyable way to test your knowledge of music history, artists, albums, and more.
+
+## Technologies Used
+
+- React.js: For building the dynamic and interactive user interface.
+- JavaScript: For handling game logic and interactivity.
+- HTML/CSS: For structuring and styling the web pages, ensuring a polished and responsive design.
+
+## Getting Started
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
