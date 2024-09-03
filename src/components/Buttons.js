@@ -21,8 +21,8 @@ function Buttons(props) {
         <button
           className={
             !cards.filter((card) => card.highlighted).length
-              ? 'disabled-submit'
-              : ''
+              ? 'disabled-submit deselect'
+              : 'enabled-submit deselect'
           }
           disabled={!cards.filter((card) => card.highlighted).length}
           onClick={() => deselectAllCards({ cards, setCards })}
@@ -34,7 +34,7 @@ function Buttons(props) {
           className={
             cards.filter((card) => card.highlighted).length !== 4
               ? 'disabled-submit'
-              : ''
+              : 'enabled-submit'
           }
           disabled={cards.filter((card) => card.highlighted).length !== 4}
           onClick={() =>

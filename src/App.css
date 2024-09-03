@@ -189,7 +189,40 @@ button {
       font-size: 1.5em;
       margin-right: 0;
   }
-  .disabled-submit, .shuffle{
+.shuffle, .enabled-submit{
       font-size: 1em;
+      width: 40%;
+  }
+
+  .deselect{
+    padding-top: 8px;
+    margin-left: 2px;
+    margin-right: 2px;
+    width: 50%;
+  }
+
+  .shuffle, .disabled-submit{
+    width: 45%;
+    font-size: 1em;
+
+  }
+
+  .disabled-submit{
+    margin-left: 2px;
+    margin-right: 0px;
+  }
+
+  .enabled-submit{
+    margin-left: 2px;
+    margin-right: 2px;
+  }
+
+  .shuffle{
+    margin-right: 2px;
+    margin-left: 0px;
+  }
+
+  .mistake{
+    font-size: 0.8em;
   }
 }
