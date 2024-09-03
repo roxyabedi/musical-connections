@@ -224,6 +224,8 @@ button {
   .enabled-submit{
     margin-left: 2px;
     margin-right: 2px;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
   }
 
   .shuffle{
