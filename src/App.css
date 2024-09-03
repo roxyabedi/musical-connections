@@ -165,3 +165,31 @@ button {
 	30%, 50%, 60%, 80% {transform: translateX(10px);}
 }
 
+.grid-container{
+    width: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media screen and (max-width: 480px){
+    .container {
+      width: 50;
+      word-wrap: break-word;
+      display: grid;
+      gap: 8px;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(4, auto) 1fr;
+      position: relative;
+      text-align: center;
+      color: rgb(0, 0, 0);
+      font-size: 13px;
+  }
+  h1{
+      font-size: 1.5em;
+      margin-right: 0;
+  }
+  .disabled-submit, .shuffle{
+      font-size: 1em;
+  }
+}

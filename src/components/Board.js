@@ -161,7 +161,7 @@ function handleClick({ index, cards, setCards }) {
   }
 
   return (
-    <div>
+    <div className ='grid-container'>
       <div className='container'>
         {correctCategorySubmitted &&
           correctCards.map((categoryObj, index) => (

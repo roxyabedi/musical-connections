@@ -14,7 +14,7 @@ function Buttons(props) {
 
     return (
       <div className='button'>
-        <button onClick={() => shuffleCards({ cards, setCards })}>
+        <button class='shuffle' onClick={() => shuffleCards({ cards, setCards })}>
           Shuffle
         </button>
         <br></br>
