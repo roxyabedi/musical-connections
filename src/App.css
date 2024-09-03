@@ -196,10 +196,10 @@ button {
 
   .deselect{
     padding-top: 8px;
-    padding-left: 8px !important;
-    padding-right: 8px !important;
+    padding-left: 14px !important;
+    padding-right: 14px !important;
     margin-left: 2px;
-    margin-right: 2px !important;
+    margin-right: 2px;
     width: 50%;
   }
 
@@ -212,8 +212,6 @@ button {
   .disabled-submit{
     margin-left: 2px;
     margin-right: 0px;
-    padding-left: 10px !important;
-    padding-right: 10px !important;
   }
 
   .enabled-submit{
@@ -224,11 +222,9 @@ button {
   .shuffle{
     margin-right: 2px;
     margin-left: 0px;
-    padding-left: 10px !important;
-    padding-right: 10px !important;
   }
 
   .mistake{
-    font-size: 0.7em;
+    font-size: 0.8em;
   }
 }
